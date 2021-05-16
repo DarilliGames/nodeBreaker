@@ -16,7 +16,7 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
     var what_to_summon = changes["cool_values"]["newValue"];
     var special_argument = "";
     var summon = true;
-    if (window.location.href.includes("4b961836-168c-4be4-aa1f-05d6a5d2319b?#!/instance/console") && what_to_summon != "") {
+    if (window.location.href.includes("instance/console") && what_to_summon != "") {
         var commandLine = document.getElementById("stdin");
         if (what_to_summon == "TrickOrTreat!") {
             var whatType = Math.floor((Math.random() * 2) + 1);
@@ -167,20 +167,17 @@ function runFrameFunction() {
 }
 
 function main() {
-    if (window.location.href.includes("4b961836-168c-4be4-aa1f-05d6a5d2319b?#!/instance/console")) {
+    if (window.location.href.includes("instance/console")) {
         console.log("somehting is happening and on right page");
         frameInterval = setInterval(runStartApplication, 5000);
 
     }
     else if (window.location.href.includes(".tv/darilli")) {
         console.log("I am on Darilli's");
-        mainInterval = setInterval(runFrameFunction, 100);
+        mainInterval = setInterval(runFrameFunction, 2000);
 
     }
-    else if (window.location.href.includes(".tv/falsesymmetry")) {
-        console.log("I am on falsesymmetry's");
 
-    }
     else {
         console.log("This is not the page you are lookign for")
     }
