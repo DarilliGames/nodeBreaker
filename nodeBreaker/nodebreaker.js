@@ -22,9 +22,22 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
             var whatType = Math.floor((Math.random() * 2) + 1);
             console.log(whatType);
             if (whatType == 1) {
-                var whatToDo = Math.floor((Math.random() * 12) + 1);
-                
-                switch(whatToDo){
+                var whatToDo = Math.floor((Math.random() * 15) + 1);
+
+                switch (whatToDo) {
+                    case 15:
+                        commandLine.value = `effect give @a jump_boost ${Math.floor((Math.random() * 30) + 1)} ${Math.floor((Math.random() * 10) + 1)}`;
+                        summon = false;
+                        break;
+                    case 14:
+                        commandLine.value = `effect give @a fire_resistance ${Math.floor((Math.random() * 30) + 1)} ${Math.floor((Math.random() * 10) + 1)}`;
+                        summon = false;
+                        break;
+                    case 13:
+                        var howmany = 1;
+                        commandLine.value = "give @a netherite_ingot " + howmany.toString();
+                        summon = false;
+                        break;
                     case 12:
                         what_to_summon = "cat";
                         break;
@@ -32,33 +45,33 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
                         what_to_summon = "iron_golem";
                         break;
                     case 10:
-                        var howmany = Math.floor((Math.random() * 3)+1);
-                        commandLine.value = "give Darilli diamond "+ howmany.toString();
+                        var howmany = Math.floor((Math.random() * 3) + 1);
+                        commandLine.value = "give @a diamond " + howmany.toString();
                         summon = false;
                         break;
                     case 9:
-                        var howmany = Math.floor((Math.random() * 3)+1);
-                        commandLine.value = "give Darilli iron_ingot " + howmany.toString();
+                        var howmany = Math.floor((Math.random() * 3) + 1);
+                        commandLine.value = "give @a iron_ingot " + howmany.toString();
                         summon = false;
                         break;
                     case 8:
-                        var howmany = Math.floor((Math.random() * 3)+1);
-                        commandLine.value = "give Darilli gold_ingot " + howmany.toString();
+                        var howmany = Math.floor((Math.random() * 3) + 1);
+                        commandLine.value = "give @a gold_ingot " + howmany.toString();
                         summon = false;
                         break;
                     case 7:
-                        var howmany = Math.floor((Math.random() * 4)+1);
-                        commandLine.value = "give Darilli bread " + howmany.toString();
+                        var howmany = Math.floor((Math.random() * 4) + 1);
+                        commandLine.value = "give @a bread " + howmany.toString();
                         summon = false;
                         break;
                     case 6:
-                        var howmany = Math.floor((Math.random() * 5)+1);
-                        commandLine.value = "give Darilli cobblestone " + howmany.toString();
+                        var howmany = Math.floor((Math.random() * 5) + 1);
+                        commandLine.value = "give @a cobblestone " + howmany.toString();
                         summon = false;
                         break;
                     case 5:
-                        var howmany = Math.floor((Math.random() * 5)+1);
-                        commandLine.value = "give Darilli arrow " + howmany.toString();
+                        var howmany = Math.floor((Math.random() * 5) + 1);
+                        commandLine.value = "give @a arrow " + howmany.toString();
                         summon = false;
                         break;
                     case 4:
@@ -74,13 +87,13 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
                         what_to_summon = "sheep";
                         break;
                 }
-                
-                
+
+
 
             }
             else {
-                whatType = Math.floor((Math.random() * 12) + 1);
-                switch(whatType){
+                whatType = Math.floor((Math.random() * 13) + 1);
+                switch (whatType) {
                     case 1:
                         what_to_summon = "zombie";
                         break;
@@ -124,18 +137,38 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
                         what_to_summon = "rabbit";
                         special_argument = " {RabbitType:99}";
                         break;
+                    case 13:
+                        what_to_summon = "illusioner";
+                        break;
+                    case 14:
+                        commandLine.value = `effect give @a blindness ${Math.floor((Math.random() * 30) + 1)} ${Math.floor((Math.random() * 10) + 1)}`;
+                        summon = false;
+                        break;
+                    case 14:
+                        commandLine.value = `effect give @a bad_omen 600`;
+                        summon = false;
+                        break;
                 }
-                
+
             }
+
+        } else if (what_to_summon.split("---").length > 1) {
+            summon = false;
+            commandLine.value = "gamemode survival " + what_to_summon.split("---")[1];
 
         }
         if (summon == true) {
-            var num1 = Math.floor((Math.random() * 6) + 1);
-            num1 *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
-            var num2 = Math.floor(Math.random() * 6) + 1;
-            num2 *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
-            commandLine.value = "execute at Darilli run summon minecraft:" + what_to_summon + " ~" + num1.toString() + " ~ ~" + num2.toString() + special_argument;
-            
+            if (what_to_summon == "tnt") {
+                commandLine.value = "execute at @a run summon minecraft:tnt ~ ~3 ~ {Fuse:100}"
+            } else {
+                var num1 = Math.floor((Math.random() * 6) + 1);
+                num1 *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
+                var num2 = Math.floor(Math.random() * 6) + 1;
+                num2 *= Math.floor(Math.random() * 2) == 1 ? 1 : -1;
+                commandLine.value = "execute at @a run summon minecraft:" + what_to_summon + " ~" + num1.toString() + " ~ ~" + num2.toString() + special_argument;
+            }
+
+
 
         }
         var ul = document.getElementById("console_form");
@@ -154,11 +187,22 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
     }
 
 });
-
 function runFrameFunction() {
     var giggle = $(".user-notice-line").last().children().first().html();
+    console.log(giggle);
     var firstSplit = giggle.split("<")[0];
-    var secondSplit = firstSplit.split(" ")[2];
+    console.log(firstSplit);
+    if (firstSplit == "Redeemed revive") {
+        if ($(".user-notice-line").last().find(".text-fragment").first().text()) {
+            var secondSplit = "revive---" + $(".user-notice-line").last().find(".text-fragment").first().text();
+        } else {
+            console.log($(".user-notice-line").html());
+            var secondSplit = "revive---" + $(".user-notice-line").last().find(".mention-fragment").first().text();
+        }
+    } else {
+        var secondSplit = firstSplit.split(" ")[2];
+
+    }
     console.log(secondSplit);
     chrome.storage.sync.set({ cool_values: secondSplit });
     $(".user-notice-line").last().removeClass("user-notice-line");
@@ -174,6 +218,16 @@ function main() {
     }
     else if (window.location.href.includes(".tv/darilli")) {
         console.log("I am on Darilli's");
+        mainInterval = setInterval(runFrameFunction, 2000);
+
+    }
+    else if (window.location.href.includes(".tv/hydra_ryzer")) {
+        console.log("I am on hydras's");
+        mainInterval = setInterval(runFrameFunction, 2000);
+
+    }
+    else if (window.location.href.includes(".tv/theburns91")) {
+        console.log("I am on burns's");
         mainInterval = setInterval(runFrameFunction, 2000);
 
     }
